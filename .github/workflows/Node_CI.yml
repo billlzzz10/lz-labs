@@ -1,14 +1,14 @@
-name: Node.js CI
+name: Node.js CI/CD
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  build-and-test:
+  build-test-deploy:
     runs-on: ubuntu-latest
-    services:
-      redis:
-        image: redis
-        ports: ["6379:6379"]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -16,5 +16,13 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run lint
-      - run: npm test
+      - run: npm test -- --coverage
       - run: npm run build
+      # Deploy Firebase (ถ้ามี firebase.json)
+      - name: Deploy to Firebase Hosting
+        uses: w9jds/firebase-action@v13.4.0
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        if: ${{ exists('firebase.json') }}
