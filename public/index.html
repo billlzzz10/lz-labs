@@ -17,17 +17,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashval Writer's Suite - ชุดเครื่องมือนักเขียน AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- vis-network library for GraphView -->
-    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!-- SEO & Social Share -->
+    <meta name="description" content="Ashval Writer's Suite: เครื่องมือ AI สำหรับนักเขียน วางแผนและสร้างสรรค์เนื้อหา บูรณาการ UnicornXOSW2.1.0">
+    <meta property="og:title" content="Ashval Writer's Suite - ชุดเครื่องมือนักเขียน AI">
+    <meta property="og:description" content="AI-powered writing, planning, and worldbuilding tools.">
+    <meta property="og:image" content="/og-image.png">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="th_TH">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ashval Writer's Suite - ชุดเครื่องมือนักเขียน AI">
+    <meta name="twitter:description" content="AI-powered writing, planning, and worldbuilding tools.">
+    <meta name="twitter:image" content="/og-image.png">
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Preconnect Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Manrope:wght@700&family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
-    
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class', // This enables the 'dark:' variant
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -35,7 +50,6 @@
                         heading: ['Manrope', 'Noto Sans Thai', 'sans-serif'],
                     },
                     colors: {
-                        // New Style Guide Colors via CSS Variables
                         bg: 'var(--c-bg)',
                         'bg-subtle': 'var(--c-bg-subtle)',
                         surface: 'var(--c-surface)',
@@ -53,7 +67,6 @@
                             hover: 'var(--c-secondary-hover)',
                             active: 'var(--c-secondary-active)',
                         },
-                        // Semantic colors from style guide
                         success: { DEFAULT: '#34C759', bg: '#D7F9E0', dark: '#30D158', 'dark-bg': '#1E4729'},
                         warning: { DEFAULT: '#FF9500', bg: '#FFF3D6', dark: '#FF9F0A', 'dark-bg': '#5A3D0C'},
                         error: { DEFAULT: '#FF3B30', bg: '#FFD6D4', dark: '#FF453A', 'dark-bg': '#5A1E1A'},
@@ -76,9 +89,7 @@
                         'btn-primary': 'var(--shadow-btn-primary)',
                         'btn-accent-hover': 'var(--shadow-btn-accent-hover)',
                     },
-                    scale: {
-                       '103': '1.03',
-                    },
+                    scale: { '103': '1.03', },
                     animation: {
                         'fade-in': 'fadeIn 0.3s ease-in-out',
                         'slide-in': 'slideIn 0.35s ease-out forwards',
@@ -89,27 +100,11 @@
                     },
                     keyframes: {
                         fadeIn: { 'from': { opacity: '0' }, 'to': { opacity: '1' }, },
-                        slideIn: { 
-                           'from': { transform: 'translateY(5px) scale(0.98)', opacity: '0' },
-                           'to': { transform: 'translateY(0) scale(1)', opacity: '1' },
-                        },
-                        viewEnter: {
-                          'from': { opacity: '0', transform: 'translateX(20px)' },
-                          'to': { opacity: '1', transform: 'translateX(0)' }
-                        },
-                        modalEnter: {
-                          'from': { opacity: '0', transform: 'scale(0.95) translateY(10px)' },
-                          'to': { opacity: '1', transform: 'scale(1) translateY(0)' }
-                        },
-                        pulseIcon: {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0.6' },
-                        },
-                        gradientBG: {
-                            '0%': { backgroundPosition: '0% 50%' },
-                            '50%': { backgroundPosition: '100% 50%' },
-                            '100%': { backgroundPosition: '0% 50%' },
-                        },
+                        slideIn: { 'from': { transform: 'translateY(5px) scale(0.98)', opacity: '0' }, 'to': { transform: 'translateY(0) scale(1)', opacity: '1' }, },
+                        viewEnter: { 'from': { opacity: '0', transform: 'translateX(20px)' }, 'to': { opacity: '1', transform: 'translateX(0)' } },
+                        modalEnter: { 'from': { opacity: '0', transform: 'scale(0.95) translateY(10px)' }, 'to': { opacity: '1', transform: 'scale(1) translateY(0)' } },
+                        pulseIcon: { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0.6' }, },
+                        gradientBG: { '0%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' }, '100%': { backgroundPosition: '0% 50%' }, },
                     }
                 }
             }
@@ -128,7 +123,6 @@
             transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, transform 0.2s ease; 
         }
 
-        /* Light Theme Vars (Neutral N) */
         :root {
             --c-bg: #FFFFFF;
             --c-bg-subtle: #F9F9FB;
@@ -153,7 +147,6 @@
             --c-paper-text: #423B2B;
         }
 
-        /* Dark Theme Vars (The Tech Artisan) */
         .dark {
             --c-bg: #1A1A1A;
             --c-bg-subtle: #222224;
@@ -165,7 +158,7 @@
             --c-primary: #3B82F6;
             --c-primary-hover: #60A5FA;
             --c-primary-active: #2563EB;
-            --c-secondary: #BF5AF2; /* Fallback secondary */
+            --c-secondary: #BF5AF2;
             --c-secondary-hover: #D07EF3;
             --c-secondary-active: #A541DD;
             --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.3);
@@ -210,13 +203,12 @@
             @apply bg-primary-hover shadow-btn-accent-hover;
             transform: translateY(-2px);
         }
-         .btn-textured-primary:active {
+        .btn-textured-primary:active {
             @apply bg-primary-active;
             transform: translateY(0px);
             box-shadow: none;
         }
         
-        /* Task checkbox */
         .task-checkbox { 
             position: relative; cursor: pointer; width: 20px; height: 20px; appearance: none; 
             border: 2px solid var(--c-border); border-radius: 4px; background-color: var(--c-bg); 
@@ -230,7 +222,6 @@
             border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); 
         }
 
-        /* Markdown content styles */
         .markdown-content h1, .markdown-content h2, .markdown-content h3 { @apply font-heading; }
         .markdown-content h1 { @apply text-2xl font-bold mt-6 mb-4; color: var(--c-text-primary); border-bottom: 1px solid var(--c-border); padding-bottom: 0.3em; } 
         .markdown-content h2 { @apply text-xl font-bold mt-5 mb-3; color: var(--c-text-primary); } 
@@ -245,13 +236,11 @@
         .markdown-content pre > code { @apply p-0 bg-transparent; }
         .markdown-content pre { @apply p-4 rounded-lg my-4 overflow-x-auto; background-color: var(--c-surface); }
 
-        /* Notification Badge for Sidebar */
         .notification-badge {
             @apply bg-error text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center absolute -top-1 -right-1;
             transform: scale(0.8);
         }
 
-        /* Note Card Hover Effect */
         .note-card {
             position: relative;
         }
@@ -268,12 +257,12 @@
             animation: fadeIn 0.3s;
         }
     </style>
-<link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/index.css">
 </head>
 <body class="font-sans antialiased">
     <div class="body-gradient"></div>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
-<script type="module" src="/index.tsx"></script>
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>
