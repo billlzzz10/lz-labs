@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { POMODORO_DEFAULT_SETTINGS, POMODORO_SESSIONS_STORAGE_KEY, POMODORO_SETTINGS_STORAGE_KEY, APP_TITLE } from '../../constants';
+import { POMODORO_DEFAULT_SETTINGS, POMODORO_SESSIONS_STORAGE_KEY, POMODORO_SETTINGS_STORAGE_KEY, APP_TITLE } from '../../../constants';
 import Icon from '../Icon';
 
 type PomodoroSessionType = 'work' | 'shortBreak' | 'longBreak';

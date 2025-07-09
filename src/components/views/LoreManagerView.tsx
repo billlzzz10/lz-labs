@@ -1,9 +1,9 @@
 
 
 import React, { useState, useMemo, useRef } from 'react';
-import { PlotPoint, WorldElement, Note, PlotPointType, PlotPointStatus, WorldElementCategory } from '../../types';
-import { PLOT_POINT_TYPES, PLOT_POINT_STATUS_OPTIONS, DEFAULT_PLOT_POINT_STATUS, WORLD_ELEMENT_CATEGORIES } from '../../constants';
-import { getSafeHtml } from '../../utils';
+import { PlotPoint, WorldElement, Note, PlotPointType, PlotPointStatus, WorldElementCategory } from '../../../types';
+import { PLOT_POINT_TYPES, PLOT_POINT_STATUS_OPTIONS, DEFAULT_PLOT_POINT_STATUS, WORLD_ELEMENT_CATEGORIES } from '../../../constants';
+import { getSafeHtml } from '../../../utils';
 import Icon from '../Icon';
 
 // --- PROPS INTERFACE ---

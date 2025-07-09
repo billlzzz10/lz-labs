@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { PlotPoint, ViewName, PlotPointStatus } from '../../types';
-import { DEFAULT_PLOT_POINT_STATUS } from '../../constants';
+import { PlotPoint, ViewName, PlotPointStatus } from '../../../types';
+import { DEFAULT_PLOT_POINT_STATUS } from '../../../constants';
 import Icon from '../Icon';
 
 interface StoryStructureGeneratorViewProps {

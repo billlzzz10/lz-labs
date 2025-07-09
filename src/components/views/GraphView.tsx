@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo, useState, useCallback } from 'react';
-import { Note, PlotPoint, WorldElement, GraphLink, SelectedGraphNode, ViewName, LinkRelationshipType } from '../../types';
-import { NOTE_CATEGORIES, PLOT_POINT_TYPES, WORLD_ELEMENT_CATEGORIES } from '../../constants';
-import { getSafeHtml } from '../../utils';
+import { Note, PlotPoint, WorldElement, GraphLink, SelectedGraphNode, ViewName, LinkRelationshipType } from '../../../types';
+import { NOTE_CATEGORIES, PLOT_POINT_TYPES, WORLD_ELEMENT_CATEGORIES } from '../../../constants';
+import { getSafeHtml } from '../../../utils';
 import Icon from '../Icon';
 
 const NODE_ID_PREFIX = {

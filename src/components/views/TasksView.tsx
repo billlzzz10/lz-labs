@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Task } from '../../types'; // Ensure Task type is imported
+import { Task } from '../../../types'; // Ensure Task type is imported
 import Icon from '../Icon';
 
 interface TasksViewProps {

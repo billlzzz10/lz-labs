@@ -1,7 +1,7 @@
 
 
 import React, { useMemo, useState, useEffect } from 'react';
-import { ViewName, Note, Task, PlotPoint, DailyQuest, DictionaryEntry } from '../../types';
+import { ViewName, Note, Task, PlotPoint, DailyQuest, DictionaryEntry } from '../../../types';
 import StatRingChart from '../charts/StatRingChart';
 import Icon from '../Icon';
 import {
@@ -13,7 +13,7 @@ import {
     DASHBOARD_PLOT_GOAL,
     DASHBOARD_TASK_GOAL,
     NOTE_CATEGORIES
-} from '../../constants';
+} from '../../../constants';
 
 
 const getCategoryDetails = (categoryKey: Note['category'] | undefined): (typeof NOTE_CATEGORIES)[number] => {

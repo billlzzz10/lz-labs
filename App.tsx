@@ -1,34 +1,26 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import ProjectSelectorDropdown from './components/ProjectSelectorDropdown';
-import MobileControls from './components/MobileControls';
-import NoteEditorModal from './components/NoteEditorModal'; 
-import Icon from './components/Icon';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import Header from './src/components/Header';
+import Sidebar from './src/components/Sidebar';
+import ProjectSelectorDropdown from './src/components/ProjectSelectorDropdown';
+import MobileControls from './src/components/MobileControls';
+import NoteEditorModal from './src/components/NoteEditorModal'; 
+import Icon from './src/components/Icon';
 
-import DashboardView from './components/views/DashboardView';
-import GraphView from './components/views/GraphView';
-import NotesView from './components/views/NotesView';
-import AiWriterView from './components/views/AiWriterView';
-import SettingsView from './components/views/SettingsView';
-import TasksView from './components/views/TasksView';
-import DictionaryView from './components/views/DictionaryView';
-import LoreManagerView from './components/views/LoreManagerView';
-import PomodoroView from './components/views/PomodoroView';
-import StoryStructureGeneratorView from './components/views/StoryStructureGeneratorView'; 
+import DashboardView from './src/components/views/DashboardView';
+import GraphView from './src/components/views/GraphView';
+import NotesView from './src/components/views/NotesView';
+import AiWriterView from './src/components/views/AiWriterView';
+import SettingsView from './src/components/views/SettingsView';
+import TasksView from './src/components/views/TasksView';
+import DictionaryView from './src/components/views/DictionaryView';
+import LoreManagerView from './src/components/views/LoreManagerView';
+import PomodoroView from './src/components/views/PomodoroView';
+import StoryStructureGeneratorView from './src/components/views/StoryStructureGeneratorView'; 
 
-import { ViewName, Project, Note, Task, DictionaryEntry, PlotPoint, PlotPointStatus, WorldElement, GraphLink, LinkRelationshipType, NoteStatus } from './types';
+import { ViewName, Note } from './types';
+import { useProjects } from './src/contexts/ProjectContext';
 import {
   DEFAULT_VIEW,
-  INITIAL_PROJECTS,
-  INITIAL_NOTES,
-  INITIAL_TASKS,
-  INITIAL_DICTIONARY_ENTRIES,
-  INITIAL_PLOT_POINTS,
-  INITIAL_WORLD_ELEMENTS,
-  DEFAULT_AI_PERSONALITY_ID,
-  NOTE_CATEGORIES,
-  DEFAULT_PLOT_POINT_STATUS, 
   DEFAULT_NOTE_STATUS,
   APP_TITLE,
   MAIN_NAVIGATION,
@@ -36,7 +28,6 @@ import {
   SETTINGS_NAVIGATION,
 } from './constants';
 import { CORE_WRITING_PERSONALITIES, AI_FUNCTIONAL_TOOLS } from './prompts';
-import { calculateCharacterCount } from './utils';
 
 
 const App: React.FC = () => {
@@ -53,13 +44,6 @@ const App: React.FC = () => {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
-  const [projects, setProjects] = useState<Project[]>(() => {
-    const savedProjects = localStorage.getItem('ashval_projects');
-    return savedProjects ? JSON.parse(savedProjects) : INITIAL_PROJECTS;
-  });
-
-  const [currentProjectId, setCurrentProjectId] = useState<string>(() => {
-    const savedProjectId = localStorage.getItem('ashval_currentProjectId');
     const allProjects = localStorage.getItem('ashval_projects') ? JSON.parse(localStorage.getItem('ashval_projects')!) : INITIAL_PROJECTS;
     if (savedProjectId && allProjects.find((p: Project) => p.id === savedProjectId)) {
         return savedProjectId;

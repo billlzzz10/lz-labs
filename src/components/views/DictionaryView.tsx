@@ -1,7 +1,7 @@
 
 
 import React, { useState, useMemo, useRef } from 'react';
-import type { DictionaryEntry } from '../../types'; // Adjusted path
+import type { DictionaryEntry } from '../../../types'; // Adjusted path
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import Icon from '../Icon';
 

@@ -1,10 +1,10 @@
 
 
 import React from 'react';
-import { AiPersonality } from '../../types';
-import { APP_ROADMAP_MARKDOWN } from '../../constants';
+import { AiPersonality } from '../../../types';
+import { APP_ROADMAP_MARKDOWN } from '../../../constants';
 import PlaceholderView from './PlaceholderView'; 
-import { getSafeHtml } from '../../utils';
+import { getSafeHtml } from '../../../utils';
 import Icon from '../Icon';
 
 const getSafeRoadmapHtml = (markdown: string): { __html: string } => {

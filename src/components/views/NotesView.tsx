@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
-import { Note, ViewName, NoteCategory, Project, NoteDisplayFormat } from '../../types';
-import { NOTE_CATEGORIES, INITIAL_NOTES, NOTE_DISPLAY_OPTIONS } from '../../constants'; 
+import { Note, ViewName, NoteCategory, Project, NoteDisplayFormat } from '../../../types';
+import { NOTE_CATEGORIES, INITIAL_NOTES, NOTE_DISPLAY_OPTIONS } from '../../../constants'; 
 import * as jsyaml from 'js-yaml'; 
-import { getSafeHtml } from '../../utils';
+import { getSafeHtml } from '../../../utils';
 import Icon from '../Icon';
 
 

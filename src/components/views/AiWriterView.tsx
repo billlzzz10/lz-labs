@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { GoogleGenAI, Chat, GenerateContentResponse, Part } from "@google/genai";
-import { AiChatLog, AiPersonality, Note, NoteCategory } from '../../types';
+import { AiChatLog, AiPersonality, Note, NoteCategory } from '../../../types';
 import ContextSelectorModal from '../ContextSelectorModal'; 
 import AiMentorPanel from '../AiMentorPanel';
 import { CORE_WRITING_PERSONALITIES } from '../../prompts';
-import { getSafeHtml } from '../../utils';
+import { getSafeHtml } from '../../../utils';
 import Icon from '../Icon';
+import html2canvas from 'html2canvas';
+import GIF from 'gif.js.optimized';
 
 
 interface AiWriterViewProps {
@@ -39,9 +41,12 @@ const AiWriterView: React.FC<AiWriterViewProps> = ({
   
   const [isCreatingNoteFromMessageId, setIsCreatingNoteFromMessageId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'chat' | 'mentor'>('chat');
+  const [isRecording, setIsRecording] = useState(false);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const ai = useRef(new GoogleGenAI({ apiKey: process.env.API_KEY! })).current;
+  const gifRef = useRef<GIF | null>(null);
+  const recordingIntervalRef = useRef<number | null>(null);
   const allAiPersonalities = useMemo(() => [...CORE_WRITING_PERSONALITIES], []);
 
   const currentPersonality = useMemo(() => {
@@ -200,6 +205,39 @@ Important: Respond ONLY with the JSON object. Do not include any introductory/co
     }
   }, [inputText, isLoading, currentChat, currentPersonality, contextTextForNextMessage, selectedContextNotesCount]);
 
+  const startRecording = useCallback(() => {
+    if (!chatContainerRef.current) return;
+    setIsRecording(true);
+    const gif = new GIF({ workers: 2, quality: 10, workerScript: '/gif.worker.js' });
+    gifRef.current = gif;
+    recordingIntervalRef.current = window.setInterval(async () => {
+      const canvas = await html2canvas(chatContainerRef.current!);
+      gif.addFrame(canvas, { copy: true, delay: 1000 });
+    }, 1000);
+  }, []);
+
+  const stopRecording = useCallback(() => {
+    if (recordingIntervalRef.current) {
+      clearInterval(recordingIntervalRef.current);
+      recordingIntervalRef.current = null;
+    }
+    setIsRecording(false);
+    const gif = gifRef.current;
+    if (gif) {
+      gif.on('finished', (blob: Blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ai-chat-demo.gif';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+      gif.render();
+    }
+  }, []);
+
   const getTabClass = (tabName: 'chat' | 'mentor') => `px-4 py-2 font-medium text-sm rounded-md transition-colors flex items-center gap-2 ${activeTab === tabName ? 'bg-primary text-white' : 'text-text-secondary hover:bg-surface'}`;
   
   return (
@@ -357,6 +395,22 @@ Important: Respond ONLY with the JSON object. Do not include any introductory/co
             />
           </div>
       )}
+      <div className="flex space-x-2 mb-2">
+        <button
+          onClick={startRecording}
+          disabled={isRecording}
+          className="px-4 py-2 bg-green-500 text-white rounded"  
+        >
+          Record GIF
+        </button>
+        <button
+          onClick={stopRecording}
+          disabled={!isRecording}
+          className="px-4 py-2 bg-red-500 text-white rounded"
+        >
+          Stop GIF
+        </button>
+      </div>
     </>
   );
 };
